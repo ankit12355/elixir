@@ -1,5 +1,8 @@
 defmodule Cards do
-
+  @moduledoc """
+  Provides methods for creating and handling a deck of cards
+  """ 
+  
  #run shell with iex -S mix
  # run file with Cards.fx name
 
@@ -7,6 +10,9 @@ defmodule Cards do
     "hello, there! This module provides functions for creating deck, shuffling, checking if card is in deck, "
   end
 
+  @doc """
+    Return a list of strings which represent a deck of playing cards
+  """
   def create_deck do
     values = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"]
     suits  = ["Spades", "Hearts", "Diamonds", "Clubs"]
@@ -20,6 +26,9 @@ defmodule Cards do
     cards
   end
 
+   @doc """
+   creates the card collection
+   """
   #iterates over both the lists sequentially. No Need to flatten list here as no other lists will be generated
   def doubleComprehension(values, suits) do 
     for suit <- suits, value <- values do
@@ -56,6 +65,9 @@ defmodule Cards do
     File.write(filename, binary)
   end
 
+   @doc """
+    Loads the file from erlang binary
+  """
   # load by using atoms
   def load1(filename) do
     {status, binary} = File.read(filename)
@@ -65,6 +77,7 @@ defmodule Cards do
       _ -> "File not found"
     end
   end
+
   # load by using comparison and assignment - 2 steps at a time
   def load2(filename) do
     case File.read(filename) do 
@@ -74,12 +87,17 @@ defmodule Cards do
       
     end
   end
-
+  @doc """
+    Non-Piped: Creates a deck of cards, shuffles it and then deals it based on hand size
+  """
   def create_hand_without_pipe(hand_size) do
     deck =  Cards.create_deck 
     deck =  Cards.shuffle(deck) 
     hand =  Cards.deal(deck,hand_size)
   end
+   @doc """
+    Piped: Creates a deck of cards, shuffles it and then deals it based on hand size
+  """
   #using Pipe operator to remove mundane code. NOTE: Pipe operator ALWAYS APPLIES AS FIRST ARGUMENT ONLY.
   def create_hand(hand_size) do 
        Cards.create_deck
